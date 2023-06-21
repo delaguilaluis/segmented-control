@@ -1,7 +1,30 @@
 import Head from "next/head";
-import { Card, CardContent, Container, Typography } from "@mui/material";
+import {
+  Container,
+  InputLabel,
+  FormControl,
+  MenuItem,
+  Select,
+  ToggleButton,
+  ToggleButtonGroup,
+  SelectChangeEvent,
+} from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useState } from "react";
+import theme from "@/lib/theme";
 
 export default function Home() {
+  const [selection, setSelection] = useState("price");
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  function handleChange(event: React.MouseEvent<HTMLElement>, value: string) {
+    setSelection(value);
+  }
+
+  function handleSelectChange(event: SelectChangeEvent) {
+    setSelection(event.target.value);
+  }
+
   return (
     <>
       <Head>
@@ -21,11 +44,33 @@ export default function Home() {
           }}
           maxWidth="lg"
         >
-          <Card sx={{ maxWidth: 392, maxHeight: 400 }}>
-            <CardContent>
-              <Typography variant="h1">Hello, World!</Typography>
-            </CardContent>
-          </Card>
+          {isMobile && (
+            <FormControl fullWidth>
+              <InputLabel>Sort</InputLabel>
+              <Select
+                value={selection}
+                label="Sort"
+                onChange={handleSelectChange}
+              >
+                <MenuItem value="price">Sort by price</MenuItem>
+                <MenuItem value="name">Sort by name</MenuItem>
+                <MenuItem value="relevance">Sort by relevance</MenuItem>
+              </Select>
+            </FormControl>
+          )}
+          {!isMobile && (
+            <ToggleButtonGroup
+              exclusive
+              color="primary"
+              value={selection}
+              onChange={handleChange}
+              aria-label="Platform"
+            >
+              <ToggleButton value="price">Sort by price</ToggleButton>
+              <ToggleButton value="name">Sort by name</ToggleButton>
+              <ToggleButton value="relevance">Sort by relevance</ToggleButton>
+            </ToggleButtonGroup>
+          )}
         </Container>
       </main>
     </>
