@@ -46,11 +46,10 @@ export default function Home() {
         >
           {isMobile && (
             <FormControl fullWidth>
-              <InputLabel>Sort</InputLabel>
               <Select
                 value={selection}
-                label="Sort"
                 onChange={handleSelectChange}
+                sx={{ backgroundColor: "white" }}
               >
                 <MenuItem value="price">Sort by price</MenuItem>
                 <MenuItem value="name">Sort by name</MenuItem>
@@ -65,6 +64,7 @@ export default function Home() {
               value={selection}
               onChange={handleChange}
               aria-label="Platform"
+              sx={{ backgroundColor: "white" }}
             >
               <ToggleButton value="price">Sort by price</ToggleButton>
               <ToggleButton value="name">Sort by name</ToggleButton>
